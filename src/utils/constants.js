@@ -1,1 +1,1 @@
-export const baseUri = 'http://127.0.0.1:8000/api/';
+export const baseUri = 'https://fathomless-scrubland-35942.herokuapp.com/api/';
