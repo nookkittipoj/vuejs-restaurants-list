@@ -176,6 +176,7 @@ export default {
       try {
         if (mergeData === false) {
           this.textSearch.pagetoken = '';
+          window.scrollTo(0, 0);
         }
         locations = await GoogleMapsService.textSearch(this.textSearch);
         const result = locations.data.results
