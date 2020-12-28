@@ -8,7 +8,7 @@
                       class="mr-1"
                       style="width: 300px"
                       @keyup.enter="onTextSearch(false)"
-                      placeholder="ค้นหาร้านอาหารใกล้คุณ">
+                      placeholder="Nearby restaurants">
         </b-form-input>
         <b-button size="sm"
                   class="my-2 my-sm-0"
@@ -19,7 +19,7 @@
         </b-button>
       </div>
     </b-navbar>
-    <div class="py-3">
+    <div class="py-3" v-if="locationList.length > 0">
       <b-card v-for="(location, index) in locationList"
               :key="index"
               no-body
@@ -109,10 +109,13 @@
         </b-row>
       </b-card>
       <b-row class="justify-content-center" v-show="loadMore">
-        <b-button variant="outline-info" @click="onTextSearch(true)">ค้นหาเพิ่มเติม</b-button>
+        <b-button variant="outline-info" @click="onTextSearch(true)">More</b-button>
       </b-row>
-      <loading-item v-show="loading"></loading-item>
     </div>
+    <div v-else>
+      <b-alert show variant="warning" class="text-center my-3">Search result not found.</b-alert>
+    </div>
+    <loading-item v-show="loading"></loading-item>
   </b-overlay>
 </template>
 
@@ -132,7 +135,7 @@ export default {
       locationList: [],
       textSearch: {
         query: 'Bang sue',
-        language: 'th',
+        language: 'en',
         region: 'th',
         type: 'restaurant',
         next_page_token: ''
@@ -150,12 +153,12 @@ export default {
       let state;
       if (openingHours) {
         if (openingHours.open_now) {
-          state = 'เปิดบริการ';
+          state = 'Open';
         } else {
-          state = 'ปิดบริการ';
+          state = 'Closed';
         }
       } else {
-        state = 'ไม่มีข้อมูล'
+        state = 'No information'
       }
       return state;
     }
