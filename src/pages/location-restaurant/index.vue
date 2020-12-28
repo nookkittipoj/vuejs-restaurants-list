@@ -19,7 +19,7 @@
         </b-button>
       </div>
     </b-navbar>
-    <div class="py-3" v-if="locationList.length > 0">
+    <div class="py-3" v-if="hasResult">
       <b-card v-for="(location, index) in locationList"
               :key="index"
               no-body
@@ -132,6 +132,7 @@ export default {
     return {
       loading: true,
       loadMore: false,
+      hasResult: true,
       locationList: [],
       textSearch: {
         query: 'Bang sue',
@@ -170,21 +171,26 @@ export default {
     async onTextSearch(mergeData = false) {
       this.loading = true;
       this.loadMore = false;
+      this.hasResult = true;
       let locations;
       try {
         if (mergeData === false) {
           this.textSearch.next_page_token = '';
         }
         locations = await GoogleMapsService.textSearch(this.textSearch);
+        const result = locations.data.results
+        if (result.length === 0) {
+          this.hasResult = false;
+        }
         if (mergeData) {
-          this.onMergeLocationList(locations.data.results)
+          this.onMergeLocationList(result)
         } else {
-          this.onSetLocationList(locations.data.results)
+          this.onSetLocationList(result)
         }
         this.textSearch.next_page_token = locations.data.next_page_token
         this.loadMore = !!this.textSearch.next_page_token
       } catch (e) {
-        console.log('[Error]onTextSearch', e)
+        this.hasResult = false;
       }
       this.loading = false
     },
