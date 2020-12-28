@@ -1,1 +1,0 @@
-export const baseUri = 'https://fathomless-scrubland-35942.herokuapp.com/api/';

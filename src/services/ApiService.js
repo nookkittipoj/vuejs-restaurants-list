@@ -1,8 +1,7 @@
 import axios from 'axios';
-import {baseUri} from "@/utils/constants";
 
 const http = new axios.create({
-    baseURL: baseUri
+    baseURL: process.env.VUE_APP_BASE_URI
 })
 
 const httpMethod = {

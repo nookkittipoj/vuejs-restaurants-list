@@ -109,7 +109,7 @@
         </b-row>
       </b-card>
       <b-row class="justify-content-center" v-show="loadMore">
-        <b-button variant="outline-info" @click="onTextSearch(true)">More</b-button>
+        <b-button variant="outline-info" @click="onTextSearch(true)">More places</b-button>
       </b-row>
     </div>
     <div v-else>
@@ -139,7 +139,7 @@ export default {
         language: 'en',
         region: 'th',
         type: 'restaurant',
-        next_page_token: ''
+        pagetoken: ''
       },
       cardImageProps: {
         blank: true,
@@ -175,7 +175,7 @@ export default {
       let locations;
       try {
         if (mergeData === false) {
-          this.textSearch.next_page_token = '';
+          this.textSearch.pagetoken = '';
         }
         locations = await GoogleMapsService.textSearch(this.textSearch);
         const result = locations.data.results
@@ -187,8 +187,8 @@ export default {
         } else {
           this.onSetLocationList(result)
         }
-        this.textSearch.next_page_token = locations.data.next_page_token
-        this.loadMore = !!this.textSearch.next_page_token
+        this.textSearch.pagetoken = locations.data.next_page_token
+        this.loadMore = !!this.textSearch.pagetoken
       } catch (e) {
         this.hasResult = false;
       }
