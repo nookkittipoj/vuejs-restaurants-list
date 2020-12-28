@@ -227,8 +227,9 @@ $icon-size: 25px;
 
 .location-icon {
   color: #ef2623;
-  font-size: 45px;
-  margin: 10px;
+  font-size: 35px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .cash-icon {
